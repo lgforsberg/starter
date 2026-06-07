@@ -6,8 +6,13 @@
     <div class="alert alert--success"><?= $__view->e($success) ?></div>
 <?php endif ?>
 
+<?php if (isset($errors['_rate'])): ?>
+    <div class="alert alert--error"><?= $__view->e($errors['_rate']) ?></div>
+<?php endif ?>
+
 <form method="post" action="/contact" class="form">
     <?= $csrf->field() ?>
+    <?= $honeypot->field() ?>
 
     <div class="form-group <?= isset($errors['name']) ? 'has-error' : '' ?>">
         <label for="name">Name</label>

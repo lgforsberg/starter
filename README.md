@@ -113,6 +113,52 @@ $pdo = $container->get(\PDO::class);
 
 Returns `null` if database config is empty (no crash on sites that don't need a DB).
 
+### Rate Limiting
+
+The contact form includes file-based rate limiting (5 attempts per IP per 15 min). To use in your own routes:
+
+```php
+if ($this->rateLimiter->tooManyAttempts('action:' . $ip, 5, 900)) {
+    // Return 429 response
+}
+$this->rateLimiter->hit('action:' . $ip, 900);
+```
+
+Note: Uses `REMOTE_ADDR`. If behind Cloudflare/proxy, adapt to read `X-Forwarded-For`.
+
+### Spam Protection
+
+Forms include a honeypot field. Add to any form:
+
+```php
+<?= $honeypot->field() ?>
+```
+
+Check in your controller before processing: `$this->honeypot->isSpam($body)`.
+
+### URL Helpers
+
+```php
+$__view->url('/about')    // https://yoursite.com/about (absolute)
+$__view->asset('css/style.css')  // /assets/css/style.css
+```
+
+### SEO / Open Graph
+
+Pass `description`, `ogImage`, and/or `canonical` in your render data:
+
+```php
+return $this->view->render($response, 'pages/about', [
+    'title' => 'About Us',
+    'description' => 'We build great websites.',
+    'ogImage' => 'https://yoursite.com/assets/images/og-about.jpg',
+]);
+```
+
+### Site Imagery
+
+Images are generated at build-time using Khaali's `~/bin/imagine` tool (Nano Banana Pro) or the Cursor built-in image tool, then placed in `public/assets/images/`. They are not generated at runtime.
+
 ## Deployment (on the Markedo server)
 
 ```bash

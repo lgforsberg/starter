@@ -9,6 +9,8 @@ use App\Middleware\SessionMiddleware;
 use App\Support\Container;
 use App\Support\Csrf;
 use App\Support\DatabaseFactory;
+use App\Support\Honeypot;
+use App\Support\RateLimiter;
 use App\Support\Session;
 use App\Support\View;
 use Monolog\Handler\StreamHandler;
@@ -17,6 +19,7 @@ use Psr\Log\LoggerInterface;
 
 $container = new Container();
 
+$config = require __DIR__ . '/app.php';
 $dbConfig = require __DIR__ . '/database.php';
 
 $container->set(Session::class, function () {
@@ -27,8 +30,8 @@ $container->set(Csrf::class, function ($c) {
     return new Csrf($c->get(Session::class));
 });
 
-$container->set(View::class, function () {
-    return new View(__DIR__ . '/../app/Views');
+$container->set(View::class, function () use ($config) {
+    return new View(__DIR__ . '/../app/Views', $config['url']);
 });
 
 $container->set(LoggerInterface::class, function () {
@@ -41,6 +44,14 @@ $container->set(LoggerInterface::class, function () {
 
 $container->set(\PDO::class, function () use ($dbConfig) {
     return DatabaseFactory::create($dbConfig);
+});
+
+$container->set(RateLimiter::class, function () {
+    return new RateLimiter(__DIR__ . '/../storage/cache/rate_limits');
+});
+
+$container->set(Honeypot::class, function () {
+    return new Honeypot();
 });
 
 // Middleware
@@ -63,6 +74,8 @@ $container->set(ContactController::class, function ($c) {
         $c->get(Session::class),
         $c->get(Csrf::class),
         $c->get(LoggerInterface::class),
+        $c->get(RateLimiter::class),
+        $c->get(Honeypot::class),
     );
 });
 

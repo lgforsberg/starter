@@ -9,13 +9,14 @@ use Psr\Http\Message\ResponseInterface;
 final class View
 {
     private string $basePath;
+    private string $baseUrl;
     private ?string $layoutFile = null;
     private array $layoutData = [];
-    private array $sections = [];
 
-    public function __construct(string $basePath)
+    public function __construct(string $basePath, string $baseUrl = '')
     {
         $this->basePath = rtrim($basePath, '/');
+        $this->baseUrl = rtrim($baseUrl, '/');
     }
 
     public function render(ResponseInterface $response, string $template, array $data = []): ResponseInterface
@@ -24,7 +25,7 @@ final class View
 
         if ($this->layoutFile) {
             $layoutFile = $this->layoutFile;
-            $layoutData = $this->layoutData;
+            $layoutData = array_merge($data, $this->layoutData);
             $this->layoutFile = null;
             $this->layoutData = [];
 
@@ -68,6 +69,19 @@ final class View
     public function partial(string $template, array $data = []): void
     {
         echo $this->renderTemplate($template, $data);
+    }
+
+    public function url(string $path = ''): string
+    {
+        if ($path === '') {
+            return $this->baseUrl;
+        }
+        return $this->baseUrl . '/' . ltrim($path, '/');
+    }
+
+    public function asset(string $path): string
+    {
+        return '/assets/' . ltrim($path, '/');
     }
 
     public function e(?string $value): string

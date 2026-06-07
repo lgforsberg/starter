@@ -198,6 +198,12 @@ ul, ol { margin: 0 0 var(--size-3) var(--size-4); }
     border: 1px solid var(--green-4);
 }
 
+.alert--error {
+    background: var(--red-1);
+    color: var(--red-9);
+    border: 1px solid var(--red-4);
+}
+
 /* === Error pages === */
 .error-page { text-align: center; padding: var(--size-9) 0; }
 .error-page h1 { font-size: var(--font-size-8); color: var(--text-2); }
