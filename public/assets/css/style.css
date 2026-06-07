@@ -1,51 +1,47 @@
-/* === Reset & Base === */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+/* === Project Tokens (override Open Props defaults here) === */
 :root {
-    --color-bg: #fafafa;
-    --color-text: #1a1a1a;
-    --color-muted: #666;
-    --color-primary: #2563eb;
-    --color-primary-dark: #1d4ed8;
-    --color-success: #059669;
-    --color-error: #dc2626;
-    --color-border: #e5e7eb;
-    --color-card: #fff;
-    --radius: 6px;
+    --brand: var(--blue-7);
+    --brand-dark: var(--blue-9);
+    --text-1: var(--gray-9);
+    --text-2: var(--gray-6);
+    --surface-1: var(--gray-0);
+    --surface-2: var(--gray-1);
+    --surface-3: white;
+    --border-color: var(--gray-3);
+    --success: var(--green-7);
+    --danger: var(--red-7);
     --max-width: 800px;
-    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* === Layout === */
 body {
-    font-family: var(--font);
-    line-height: 1.6;
-    color: var(--color-text);
-    background: var(--color-bg);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: var(--surface-1);
+    color: var(--text-1);
 }
 
-main { flex: 1; padding: 2rem 0; }
+main { flex: 1; padding: var(--size-7) 0; }
 
 .container {
     max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 1.5rem;
+    margin-inline: auto;
+    padding-inline: var(--size-4);
 }
 
 /* === Typography === */
-h1 { font-size: 2rem; margin-bottom: 1rem; }
-h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
-p { margin-bottom: 1rem; }
-a { color: var(--color-primary); }
-ul, ol { margin: 0 0 1rem 1.5rem; }
+h1 { font-size: var(--font-size-5); margin-block-end: var(--size-3); }
+h2 { font-size: var(--font-size-4); margin-block-end: var(--size-2); }
+p { margin-block-end: var(--size-3); }
+a { color: var(--brand); }
+ul, ol { margin: 0 0 var(--size-3) var(--size-4); }
 
 /* === Header === */
 .site-header {
-    background: var(--color-card);
-    border-bottom: 1px solid var(--color-border);
-    padding: 1rem 0;
+    background: var(--surface-3);
+    border-block-end: 1px solid var(--border-color);
+    padding: var(--size-3) 0;
 }
 
 .header-inner {
@@ -55,21 +51,21 @@ ul, ol { margin: 0 0 1rem 1.5rem; }
 }
 
 .logo {
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-7);
     text-decoration: none;
-    color: var(--color-text);
+    color: var(--text-1);
 }
 
 .nav a {
-    margin-left: 1.5rem;
+    margin-inline-start: var(--size-5);
     text-decoration: none;
-    color: var(--color-muted);
-    font-weight: 500;
+    color: var(--text-2);
+    font-weight: var(--font-weight-5);
     transition: color 0.2s;
 }
 
-.nav a:hover { color: var(--color-primary); }
+.nav a:hover { color: var(--brand); }
 
 .nav-toggle {
     display: none;
@@ -78,14 +74,15 @@ ul, ol { margin: 0 0 1rem 1.5rem; }
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: var(--size-2);
 }
 
 .nav-toggle span {
     display: block;
     width: 20px;
     height: 2px;
-    background: var(--color-text);
+    background: var(--text-1);
+    border-radius: var(--radius-round);
 }
 
 @media (max-width: 600px) {
@@ -96,130 +93,132 @@ ul, ol { margin: 0 0 1rem 1.5rem; }
         top: 100%;
         left: 0;
         right: 0;
-        background: var(--color-card);
-        border-bottom: 1px solid var(--color-border);
-        padding: 1rem 1.5rem;
+        background: var(--surface-3);
+        border-block-end: 1px solid var(--border-color);
+        padding: var(--size-3) var(--size-4);
         flex-direction: column;
     }
     .nav--open { display: flex; }
-    .nav a { margin: 0.5rem 0; margin-left: 0; }
+    .nav a { margin: var(--size-2) 0; margin-inline-start: 0; }
     .site-header { position: relative; }
 }
 
 /* === Footer === */
 .site-footer {
-    background: var(--color-card);
-    border-top: 1px solid var(--color-border);
-    padding: 1.5rem 0;
+    background: var(--surface-3);
+    border-block-start: 1px solid var(--border-color);
+    padding: var(--size-4) 0;
     text-align: center;
-    color: var(--color-muted);
-    font-size: 0.875rem;
+    color: var(--text-2);
+    font-size: var(--font-size-1);
 }
 
 /* === Card === */
 .card {
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    margin: 2rem 0;
+    background: var(--surface-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-2);
+    padding: var(--size-5);
+    margin-block: var(--size-6);
+    box-shadow: var(--shadow-2);
 }
 
 /* === Button === */
 .btn {
     display: inline-block;
-    background: var(--color-primary);
-    color: #fff;
+    background: var(--brand);
+    color: white;
     border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: var(--radius);
-    font-size: 0.95rem;
-    font-weight: 500;
+    padding: var(--size-2) var(--size-4);
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-5);
     cursor: pointer;
     text-decoration: none;
     transition: background 0.2s;
 }
 
-.btn:hover { background: var(--color-primary-dark); }
+.btn:hover { background: var(--brand-dark); }
 
 /* === Forms === */
 .form { max-width: 500px; }
 
 .form-group {
-    margin-bottom: 1.25rem;
+    margin-block-end: var(--size-4);
 }
 
 .form-group label {
     display: block;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-    font-size: 0.9rem;
+    font-weight: var(--font-weight-5);
+    margin-block-end: var(--size-1);
+    font-size: var(--font-size-1);
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    font-size: 1rem;
-    font-family: var(--font);
+    padding: var(--size-2) var(--size-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-2);
+    font-size: var(--font-size-2);
+    font-family: inherit;
     transition: border-color 0.2s;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 2px var(--blue-2);
 }
 
 .form-group.has-error input,
 .form-group.has-error textarea {
-    border-color: var(--color-error);
+    border-color: var(--danger);
 }
 
 .error {
     display: block;
-    color: var(--color-error);
-    font-size: 0.85rem;
-    margin-top: 0.25rem;
+    color: var(--danger);
+    font-size: var(--font-size-0);
+    margin-block-start: var(--size-1);
 }
 
 /* === Alerts === */
 .alert {
-    padding: 0.8rem 1rem;
-    border-radius: var(--radius);
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
+    padding: var(--size-3) var(--size-4);
+    border-radius: var(--radius-2);
+    margin-block-end: var(--size-5);
+    font-size: var(--font-size-2);
 }
 
 .alert--success {
-    background: #ecfdf5;
-    color: var(--color-success);
-    border: 1px solid #a7f3d0;
+    background: var(--green-1);
+    color: var(--green-9);
+    border: 1px solid var(--green-4);
 }
 
 /* === Error pages === */
-.error-page { text-align: center; padding: 3rem 0; }
-.error-page h1 { font-size: 4rem; color: var(--color-muted); }
-.error-page p { margin-bottom: 1.5rem; color: var(--color-muted); }
+.error-page { text-align: center; padding: var(--size-9) 0; }
+.error-page h1 { font-size: var(--font-size-8); color: var(--text-2); }
+.error-page p { margin-block-end: var(--size-5); color: var(--text-2); }
 
 /* === HTMX target === */
-.htmx-target { margin-top: 1rem; }
+.htmx-target { margin-block-start: var(--size-3); }
 
 .greeting-fragment {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    border-radius: var(--radius);
-    padding: 1rem;
+    background: var(--blue-1);
+    border: 1px solid var(--blue-3);
+    border-radius: var(--radius-2);
+    padding: var(--size-4);
 }
 
 /* === Debug === */
-.debug-details { margin: 1.5rem 0; text-align: left; }
+.debug-details { margin-block: var(--size-5); text-align: left; }
 .debug-details pre {
-    background: #f3f4f6;
-    padding: 1rem;
-    border-radius: var(--radius);
+    background: var(--surface-2);
+    padding: var(--size-4);
+    border-radius: var(--radius-2);
     overflow-x: auto;
-    font-size: 0.8rem;
+    font-size: var(--font-size-0);
 }
